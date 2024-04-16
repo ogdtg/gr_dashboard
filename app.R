@@ -72,6 +72,8 @@ ui <- dashboardPage(
           p("Sollten Ihnen etwas unklar sein, können sie gerne einen Blick in unser Tutorial werfen."),
 
           actionButton("start_tutorial","Tutorial starten", icon = icon("graduation-cap")),
+
+
           width = 12,
           title = NULL,
           id = "wb_box"
@@ -134,6 +136,19 @@ ui <- dashboardPage(
             title = NULL,
             id = "panasch_chart_box_b"
           )
+        ),
+        box(
+          width = 12,
+          title = NULL,
+          p(tags$b("Dienststelle für Statistik")),
+          p("Grabenstrasse 8"),
+          p("8500 Frauenfeld"),
+          p("Schweiz"),
+          br(),
+          p("Sie finden den Code für dieses Dashbord auf GitHub"),
+          actionButton(inputId='gh_button', label="GitHub Repository",
+                       icon = icon("github"),
+                       onclick ="window.open('https://github.com/ogdtg/gr_dashboard', '_blank')")
         )
       )
     )

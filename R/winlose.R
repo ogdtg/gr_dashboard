@@ -1,5 +1,4 @@
 # Functions
-partycolor <- readRDS("shinydata/partycolor.rds")
 
 #' Customize Echart to add correct Axis Title
 #'

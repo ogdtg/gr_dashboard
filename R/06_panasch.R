@@ -282,6 +282,7 @@ prepare_sankey_gemeinde <- function(sankey_panasch_data,partycolor){
 
   }
   base_sankey$x$opts$series[[1]]$emphasis <- list(focus = "adjacency")
+  base_sankey$x$opts$tooltip$position <- "top"
 
   return(base_sankey)
 
@@ -369,7 +370,8 @@ generate_text_panasch_gemeinde <- function(sankey_panasch_data,attrakt_data , ge
     panaschier_text <- glue::glue("In {gemeinde} {war_gruen} {die_win} {attrakt_gemeinden$partei[1]} die insgesamt attraktivste Partei bei den Grossratswahlen 2024. Insgesamt {erhielt} {die_win} {attrakt_gemeinden$partei[1]} je kandidierender Person auf 1000 parteifremden Wahlzetteln {attrakt_gemeinden$attrakt[1] %>% round(1)} Panaschierstimme.
                                 Am schwächsten {schnitt} bei der Attraktivität  {die_last} {attrakt_gemeinden$partei[nrow(attrakt_gemeinden)]} ab. Pro kandiderender Person erhielt die Partei nur {attrakt_gemeinden$attrakt[nrow(attrakt_gemeinden)] %>% round(1)} Panaschierstimmen auf 1000 parteifremden Wahlzetteln.
                                 Der stärkste Panaschierfluss war zwischen {der_from} {largest$from} und {der_to} {largest$to} zu beobachten. Insgesamt flossen hier {largest$stimmen} Stimmen.
-                                Pro 1000 Wahlzetteln {der_from2} {largest$from} und kandiderender Person auf Seiten von {der_to} {largest$to}, flossen somit {round(largest$panasch,1)} Stimmen von {der_from} {largest$from} zu {der_to} {largest$to}")
+                                Pro 1000 Wahlzetteln {der_from2} {largest$from} und kandiderender Person auf Seiten von {der_to} {largest$to}, flossen somit {round(largest$panasch,1)} Stimmen von {der_from} {largest$from} zu {der_to} {largest$to}")%>%
+      str_replace_all("(?<!\\A|\\.\\s)Die Mitte", "die Mitte")
 
 
   return(panaschier_text)
@@ -413,8 +415,10 @@ generate_title_panasch <- function(attrakt_data, gemeinde) {
 
 
   start_char <- stringr::str_extract(aussage,"^.")
-  aussage <- stringr::str_replace(aussage,"^.",toupper(start_char))
-  return(aussage)
+  aussage <- stringr::str_replace(aussage,"^.",toupper(start_char))%>%
+    str_replace_all("(?<!\\A|\\.\\s)Die Mitte", "die Mitte")
+
+  return(aussage )
 }
 
 

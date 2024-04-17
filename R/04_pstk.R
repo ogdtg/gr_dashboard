@@ -110,7 +110,8 @@ generate_title_pstk <- function(pstk_data, selected_gemeinden) {
   }
 
   start_char <- stringr::str_extract(aussage,"^.")
-  aussage <- stringr::str_replace(aussage,"^.",toupper(start_char))
+  aussage <- stringr::str_replace(aussage,"^.",toupper(start_char))%>%
+    str_replace_all("(?<!\\A|\\.\\s)Die Mitte", "die Mitte")
   return(aussage)
 }
 
@@ -232,7 +233,8 @@ generate_text_pstk <- function(pstk_data, selected_gemeinden) {
 
 
   }
-  return(text)
+  return(text %>%
+           str_replace_all("(?<!\\A|\\.\\s)Die Mitte", "die Mitte")  )
 }
 
 
@@ -248,6 +250,7 @@ generate_text_pstk <- function(pstk_data, selected_gemeinden) {
 render_pstk_chart <- function(pstk_data,selected_gemeinden){
   renderEcharts4r({
     pstk_chart <- pstk_data %>%
+      mutate(share = round(share,1)) %>%
       e_charts(abbr_de) %>%
       e_bar(share) %>%
       e_color(color = c("#0000004D","black")) %>%
@@ -256,8 +259,8 @@ render_pstk_chart <- function(pstk_data,selected_gemeinden){
         formatter = htmlwidgets::JS(paste0("
       function(params){
         return('<strong>' +  params.value[0] +
-                '</strong><br />Gemeinde: ' + params.name +
-                '<br />Parteistärke: ' + params.value[1])
+                '</strong><br />Gemeinde: ' + params.seriesName +
+                '<br />Parteistärke: ' + params.value[1] + ' %')
                 }"))) %>%
       e_x_axis(axisLabel = list(rotate = 45)) %>%
       e_axis_labels(
@@ -323,7 +326,7 @@ generate_bullets_pstk <- function(pstk_data , selected_gemeinden){
     ")
   })
 
-  bullet_list <- paste0(bullets,collapse = "<br>")
+  bullet_list <- paste0(bullets,collapse = "")
 
 
   HTML(bullet_list)

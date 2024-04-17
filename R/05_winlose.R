@@ -21,6 +21,8 @@ customize_echart <- function(echart){
   echart$x$opts$yAxis[[1]]$nameLocation <- "middle"
   echart$x$opts$yAxis[[1]]$nameGap <- 50
   echart$x$opts$yAxis[[1]]$nameTextStyle  <- list(color = "black",fontSize = 14)
+  echart$x$opts$tooltip$position <- "top"
+
   return(echart)
 
 }
@@ -151,7 +153,7 @@ formulierungen_winlose_dif <- c(
 formulierungen_winlose_same <- c(
   "Grösster Stimmenzuwachs für Partei X in Gemeinde A und Gemeinde B",
   "In Gemeinde A und Gemeinde B verzeichnet Partei X den stärksten Stimmenzuwachs",
-  "Partei X als grösste Gewinner in Gemeinde A und Gemeinde B",
+  "Partei X als grösste Gewinnerin in Gemeinde A und Gemeinde B",
   "Partei X mit dem grössten Stimmenzuwachs in Gemeinde A und Gemeinde B"
 )
 
@@ -202,7 +204,9 @@ generate_title_winlose <- function(winlose_data , selected_gemeinden) {
   }
 
   start_char <- stringr::str_extract(aussage,"^.")
-  aussage <- stringr::str_replace(aussage,"^.",toupper(start_char))
+  aussage <- stringr::str_replace(aussage,"^.",toupper(start_char)) %>%
+    str_replace_all("(?<!\\A|\\.\\s)Die Mitte", "die Mitte")
+
   return(aussage)
 }
 
@@ -284,7 +288,8 @@ generate_text_winlose <- function(winlose_data , selected_gemeinden){
 
   }
 
-  return(winlose_text)
+  return(winlose_text %>%
+           str_replace_all("(?<!\\A|\\.\\s)Die Mitte", "die Mitte")  )
 
 
 }

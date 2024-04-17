@@ -1,5 +1,6 @@
 # Boxes
 
+# Introduction Box
 start_box <- box(
   h2("Gemeindevergleich: Grossratswahlen 2024"),
   p("Auf diesem Dashboard können die Ergebnisse der 80 Thurgauer Gemeinden bei den Grossrtaswahlen 2024 miteinander verglichen werden.
@@ -16,10 +17,14 @@ start_box <- box(
 )
 
 
-
+# Wahlbeteiligung
 wb_box <- box(
   uiOutput("wb_heading"),
-  textOutput("wb_text"),
+  if(bullets){
+    uiOutput("wb_text")
+  } else {
+    textOutput("wb_text")
+  },
   br(),
   echarts4rOutput("wb_chart"),
   p(tags$b("Lesehilfe:"), " Wahlbeteiligung in % (Y-Achse) im Zeitverlauf seit 2008."),
@@ -29,9 +34,15 @@ wb_box <- box(
   id = "wb_box"
 )
 
+
+# Parteistaerke
 pstk_box <- box(
   uiOutput("pstk_heading"),
-  uiOutput("pstk_text"),
+  if(bullets){
+    uiOutput("pstk_text")
+  } else {
+    textOutput("pstk_text")
+  },
   br(),
   echarts4rOutput("pstk_chart"),
   p(tags$b("Lesehilfe:"), " Parteistaerke in % (Y-Achse) für die Grossratswahlen 2004 in den jeweiligen Gemeinden."),
@@ -41,10 +52,14 @@ pstk_box <- box(
   id = "pstk_box"
 )
 
-
+# Veränderung Parteistaerke
 winlose_box <- box(
   uiOutput("winlose_heading"),
-  uiOutput("winlose_text"),
+  if(bullets){
+    uiOutput("winlose_text")
+  } else {
+    textOutput("winlose_text")
+  },
   br(),
   echarts4rOutput("winlose_chart"),
   p(tags$b("Lesehilfe:"), " Veränderung der Parteistaerke im Vergleich zur Grossratswahl 2020 in Prozentpunkten (Y-Achse) in den jeweiligen Gemeinden."),
@@ -54,26 +69,34 @@ winlose_box <- box(
   id = "winlose_box"
 )
 
+# Panaschierstatistik A
 panasch_box_a <- box(
   uiOutput("gemeinde_a_heading"),
-  uiOutput("panasch_text_a"),
+  if(bullets){
+    uiOutput("panasch_text_a")
+  } else {
+    textOutput("panasch_text_a")
+  },
   echarts4rOutput("panasch_chart_a"),
-  p("<b>Lesehilfe</b>"),
   width = 6,
   title = NULL,
   id = "panasch_chart_box_a"
 )
 
+# Panaschierstatistik B
 panasch_box_b <- box(
   uiOutput("gemeinde_b_heading"),
-  uiOutput("panasch_text_b"),
-  echarts4rOutput("panasch_chart_b"),
-  p("Lesehilfe"),
+  if(bullets){
+    uiOutput("panasch_text_b")
+  } else {
+    textOutput("panasch_text_b")
+  },  echarts4rOutput("panasch_chart_b"),
   width = 6,
   title = NULL,
   id = "panasch_chart_box_b"
 )
 
+# Volle Panaschierstatistik
 panasch_box <- box(
   h3("Panaschierstatistik"),
   p("Die Panaschierstatistik gibt an wie viele Panaschierstimmen pro 1000 Wahlzettel der Herkunftspartei und pro kandiderender Person der Empfängerpartei fliessen. Die genaue Berechnung kann ",
@@ -84,7 +107,11 @@ panasch_box <- box(
   title = NULL,
   id = "panasch_box",
   panasch_box_a,
-  panasch_box_b
+  panasch_box_b,
+  br(),
+  p(tags$b("Lesehilfe:"), " Die Diagramme zeigen den Fluss der Panaschierstimmen von der Herkunftspartei links zur Empfängerpartei rechts.
+    Die angegebenen Werte entsprechen der Anzahl der fliessenden Panaschierstimmen pro 1000 Wahlzettel der Herkunftspartei und pro kandiderender Person der Empfängerpartei."),
+
 )
 
 

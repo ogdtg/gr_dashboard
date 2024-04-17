@@ -7,6 +7,7 @@ library(colorspace)
 
 # Load data
 
+bullets <- TRUE
 
 partycolor <- readRDS("shinydata/partycolor.rds")
 gemeinden_vec <- sort(readRDS("shinydata/gemeinden_vec.rds"))

@@ -190,28 +190,32 @@ generate_wahlbeteiligung_title_text <- function(gemeinde_a, gemeinde_b, wahlbete
                         text_wb_gemeinde_vergleich_letzte[[1]],
                         text_wb_gemeinde_vergleich_tiefstand[[1]],
                         text_wb_gemeinde_vergleich_letzte[[2]],
-                        text_wb_gemeinde_vergleich_tiefstand[[2]], collapse = " ")
+                        text_wb_gemeinde_vergleich_tiefstand[[2]], collapse = " ") %>%
+      str_replace_all("(?<!\\A|\\.\\s)Die Mitte", "die Mitte")
 
 
 
-  return(list(title = title, text = full_text))
+  return(list(title = title %>%
+                str_replace_all("(?<!\\A|\\.\\s)Die Mitte", "die Mitte")  ,
+              text = full_text))
 }
 
-#' Prepare data and generate text and title for wahlbeteiligung chart
+
+
+#' Prepare WB data for creating text and bulltes
 #'
 #' @param wb_data result of prepare_wb_data()
 #' @param selected_gemeinden vector of exactly two gemeinden
-#' @param year election year
-#' @param threshold from when one you speak of a strong difference between two gemeinden
+#' @param year year of election
 #'
-#' @return text
+#' @return list
 #' @export
 #'
 #' @examples
-generate_wahlbeteiligung_text <- function(wb_data, selected_gemeinden,year,threshold){
-
-
+prepare_wb_list <- function(wb_data, selected_gemeinden,year){
   wb_list <- list(list(),list())
+
+  names(wb_list) <- selected_gemeinden
 
   for (i in seq_along(selected_gemeinden)){
 
@@ -230,6 +234,25 @@ generate_wahlbeteiligung_text <- function(wb_data, selected_gemeinden,year,thres
       pull(wahlbeteiligung_in_prozent)
 
   }
+  return(wb_list)
+}
+
+#' Prepare data and generate text and title for wahlbeteiligung chart
+#'
+#' @param wb_data result of prepare_wb_data()
+#' @param selected_gemeinden vector of exactly two gemeinden
+#' @param year election year
+#' @param threshold from when one you speak of a strong difference between two gemeinden
+#'
+#' @return list
+#' @export
+#'
+#' @examples
+generate_wahlbeteiligung_text <- function(wb_data, selected_gemeinden,year,threshold){
+
+
+  wb_list <- prepare_wb_list(wb_data, selected_gemeinden,year)
+
   generate_wahlbeteiligung_title_text(gemeinde_a = selected_gemeinden[1],
                                       gemeinde_b = selected_gemeinden[2],
                                       wahlbeteiligung_a = wb_list[[1]]$wb,
@@ -244,6 +267,63 @@ generate_wahlbeteiligung_text <- function(wb_data, selected_gemeinden,year,thres
 
 }
 
+
+
+#' Prepare data and generate text/bullets and title for wahlbeteiligung chart
+#'
+#' @param wb_data result of prepare_wb_data()
+#' @param selected_gemeinden vector of exactly two gemeinden
+#' @param year election year
+#' @param threshold from when one you speak of a strong difference between two gemeinden
+#'
+#' @return list
+#' @export
+#'
+#' @examples
+
+generate_wahlbeteiligung_bullets <- function(wb_data, selected_gemeinden,year,threshold){
+
+  wb_list <- prepare_wb_list(wb_data, selected_gemeinden,year)
+
+  temp <-   generate_wahlbeteiligung_title_text(gemeinde_a = selected_gemeinden[1],
+                                                gemeinde_b = selected_gemeinden[2],
+                                                wahlbeteiligung_a = wb_list[[1]]$wb,
+                                                wahlbeteiligung_b = wb_list[[2]]$wb,
+                                                wahlbeteiligung_a_letzte = wb_list[[1]]$wb_last,
+                                                wahlbeteiligung_b_letzte = wb_list[[2]]$wb_last,
+                                                wahlbeteiligung_a_zeitreihe = wb_list[[1]]$zeitreihe,
+                                                wahlbeteiligung_b_zeitreihe = wb_list[[2]]$zeitreihe,
+                                                threshold = threshold)
+  if (!bullets){
+    return(temp)
+  }
+
+  bullet_points <- lapply(selected_gemeinden,function(gemeinde){
+
+    change <- wb_list[[gemeinde]][['wb']]-wb_list[[gemeinde]][['wb_last']]
+    abs_change <- abs(change) %>% round(1)
+    change_symbol <- ifelse(change>0,"+",
+                            ifelse(change==0,"+-",
+                                   ifelse(change<0,"-","")))
+
+    glue::glue("
+      <br>
+      <b>{gemeinde}</b>
+      <ul>
+        <li><i>Wahlbeteiligung:</i> <b>{wb_list[[gemeinde]][['wb']]}%</b> ({change_symbol} {abs_change} Prozentpunkte im Vergleich zur Grossratswahl 2020)</li>
+      </ul>
+    ")
+  })
+
+  bullet_list <- paste0(bullet_points,collapse = "")
+
+
+  temp$text <- HTML(bullet_list)
+
+  return(temp)
+
+
+}
 
 
 

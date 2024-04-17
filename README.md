@@ -1,8 +1,8 @@
 # Wahlkompass 2024
 
-This Dashboard visualizes teh comparision of election results for Gemeinden at the Grossratswahlen 2024 in Thurgau.
+This dashboard visualizes the comparison of election results for Gemeinden at the Grossratswahlen 2024 in Thurgau.
 
-The Dashboard can be accessed [here]().
+The dashboard can be accessed [here]().
 
 
 # Content

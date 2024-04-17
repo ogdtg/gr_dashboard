@@ -1,3 +1,10 @@
+# load packages
+library(dplyr)
+library(echarts4r)
+library(tidyr)
+library(stringr)
+library(colorspace)
+
 #' Prepare Data for Panaschierstatistik
 #'
 #' @param wz_data data containing information on Wahlzettel (sk-stat-12)
@@ -408,4 +415,36 @@ generate_title_panasch <- function(attrakt_data, gemeinde) {
   start_char <- stringr::str_extract(aussage,"^.")
   aussage <- stringr::str_replace(aussage,"^.",toupper(start_char))
   return(aussage)
+}
+
+
+generate_bullets_panasch <- function(sankey_panasch_data,attrakt_data , gemeinde){
+  sankey_panasch_data <- sankey_panasch_data
+
+
+  attrakt_gemeinden <- prepare_attrakt_data_gemeinden(attrakt_data,gemeinde) %>%
+    arrange(desc(attrakt))
+
+
+  largest <- sankey_panasch_data %>%
+    filter(panasch == max(panasch))
+
+
+  smallest <- sankey_panasch_data %>%
+    filter(panasch == min(panasch))
+
+  bullets <- glue::glue("
+      <br>
+      <b>{gemeinde}</b>
+      <ul>
+        <li><i>Stärkster Panaschierfluss:</i> <b>{largest$from[1]}</b> &rarr; <b>{largest$to[1]}</b> ({round(largest$panasch[1],1)} Panaschierstimmen pro 1000 Wahlzettel der Herkunftspartei und kandidierender Person der Empfängerpartei.)</li>
+        <li><i>Schwächster Panaschierfluss:</i> <b>{smallest$from[1]}</b> &rarr; <b>{smallest$to[1]}</b> ({round(smallest$panasch[1],1)} Panaschierstimmen pro 1000 Wahlzettel der Herkunftspartei und kandidierender Person der Empfängerpartei.)</li>
+        <li><i>Attraktivste Partei:</i> <b>{attrakt_gemeinden$partei[1]}</b> (erhielt {round(attrakt_gemeinden$attrakt[1],1)} Panaschierstimmen je kandidierender Person auf 1000 parteifremden Wahlzetteln.)</li>
+        <li><i>Attraktivste Partei:</i> <b>{attrakt_gemeinden$partei[nrow(attrakt_gemeinden)]}</b> (erhielt {round(attrakt_gemeinden$attrakt[nrow(attrakt_gemeinden)],1)} Panaschierstimmen je kandidierender Person auf 1000 parteifremden Wahlzetteln.)</li>
+
+      </ul>
+    ")
+
+  HTML(bullets)
+
 }

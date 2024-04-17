@@ -1,3 +1,10 @@
+# load packages
+library(dplyr)
+library(echarts4r)
+library(tidyr)
+library(stringr)
+library(colorspace)
+
 # Functions
 
 #' Customize Echart to add correct Axis Title
@@ -279,5 +286,40 @@ generate_text_winlose <- function(winlose_data , selected_gemeinden){
 
   return(winlose_text)
 
+
+}
+
+
+
+
+generate_bullets_winlose <- function(winlose_data , selected_gemeinden){
+
+  winlose_sort <- winlose_data %>%
+    group_by(gemeinde_name) %>%
+    arrange(share) %>%
+    filter(share == max(share)|share == min(share))
+
+  # Was wenn mehrer Parteien den gleichen win/loss haben?
+
+  wl_list <- prepare_winner_loser(winlose_sort , selected_gemeinden)
+
+  names(wl_list) <- names(wl_list) %>% str_replace_all("_a",paste0("_",selected_gemeinden[1]))
+  names(wl_list) <- names(wl_list) %>% str_replace_all("_b",paste0("_",selected_gemeinden[2]))
+
+  bullets <- lapply(selected_gemeinden,function(gemeinde){
+    glue::glue("
+      <br>
+      <b>{gemeinde}</b>
+      <ul>
+        <li><i>Grösster Gewinner:</i> <b>{wl_list[[paste0('winner_',gemeinde)]] %>% str_remove('die') %>% str_replace('Grünen','GRÜNE')}</b> ({wl_list[[paste0('win_',gemeinde)]]} Prozentpunkte Gewinn im Vergleich zu den Wahlen 2020)</li>
+        <li><i>Grösster Verlierer</i>: <b>{wl_list[[paste0('loser_',gemeinde)]] %>% str_remove('die') %>% str_replace('Grünen','GRÜNE')}</b> ({wl_list[[paste0('loss_',gemeinde)]]} Prozentpunkte Verlust im Vergleich zu den Wahlen 2020)</li>
+      </ul>
+    ")
+  })
+
+  bullet_list <- paste0(bullets,collapse = "<br>")
+
+
+  HTML(bullet_list)
 
 }

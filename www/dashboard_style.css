@@ -17,6 +17,9 @@ h3, h2 {
         font-weight: bold;
       }
 
+a {
+    color: #367d32;
+}
 
 .skin-blue .main-header {
   max-height: 150px;
@@ -118,8 +121,12 @@ img.logoTg{
   background-color: #ffffff;
     color:black;
   font-family: akzidenz-grotesk, 'Helvetica Neue', Helvetica, Arial, Geneva, sans-serif;
-  font-weight: 400;
+  font-weight: bold;
   height: 69px;
+  display: block;
+  margin: 0px auto;
+  text-align: center;
+  width: 100%;
 
  }
  img.logoTg{
@@ -135,4 +142,11 @@ img.logoTg{
 
 container{
   background-color: transparent;
+}
+
+
+#gh_button{
+  background-color: black;
+  color: white;
+  border-color: white;
 }

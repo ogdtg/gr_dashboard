@@ -1,3 +1,10 @@
+# load packages
+library(dplyr)
+library(echarts4r)
+library(tidyr)
+library(stringr)
+library(colorspace)
+
 # Wahlbeteiligung
 
 threshold <- 5
@@ -95,7 +102,7 @@ generate_wahlbeteiligung_title_text <- function(gemeinde_a, gemeinde_b, wahlbete
     text_wb_gemeinde_vergleich <- glue::glue("Die Wahlbeteiligung in {gemeinde_b} ({wahlbeteiligung_b}%) lag 2024 deutlich höher als in {gemeinde_a}, wo nur {wahlbeteiligung_a}% der Stimmberechtigten ihre Stimme abgaben.")
 
   } else if (wahlbeteiligung_a < wahlbeteiligung_b & wahlbeteiligung_a + threshold >= wahlbeteiligung_b_letzte){
-    title <- glue::glue("Leicht erhöhte Wahlbeteiligung in {gemeinde_a} im Vergleich zu {gemeinde_b}")
+    title <- glue::glue("Leicht erhöhte Wahlbeteiligung in {gemeinde_b} im Vergleich zu {gemeinde_a}")
     text_wb_gemeinde_vergleich <- glue::glue("Die Wahlbeteiligung in {gemeinde_b} ({wahlbeteiligung_b}%) lag 2024 etwas höher als in {gemeinde_a}, wo {wahlbeteiligung_a}% der Stimmberechtigten ihre Stimme abgaben.")
 
   }

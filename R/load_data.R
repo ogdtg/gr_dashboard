@@ -1,3 +1,10 @@
+# load packages
+library(dplyr)
+library(echarts4r)
+library(tidyr)
+library(stringr)
+library(colorspace)
+
 # Load data
 
 
@@ -11,3 +18,4 @@ wb_data <- readRDS("shinydata/wb_data.rds")
 listen <- readRDS("shinydata/listen.rds")
 panasch_data <- readRDS("shinydata/panasch_data.rds")
 attrakt <- readRDS("shinydata/attrakt.rds")
+modal_start <- readRDS("shinydata/modal_start.rds")

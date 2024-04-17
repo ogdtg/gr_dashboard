@@ -1,10 +1,6 @@
 library(shiny)
 library(shinydashboard)
-library(dplyr)
-library(echarts4r)
-library(tidyr)
-library(stringr)
-library(colorspace)
+
 
 
 # Start the App over the "Run App" button in the top right corner of R Studio
@@ -12,7 +8,7 @@ library(colorspace)
 
 # Define UI
 ui <- dashboardPage(
-  dashboardHeader(title = "Grossratswahlen 2024",
+  dashboardHeader(title = "Wahlkompass 2024",
                   tags$li(a(href = 'https://statistik.tg.ch/themen-und-daten/staat-und-politik/wahlen-und-abstimmungen/grossratswahlen.html/10545',
                             img(src = 'https://www.tg.ch/public/upload/assets/20/logo-kanton-thurgau.svg',
                                 title = "Company Home", height = "30px",
@@ -44,6 +40,7 @@ ui <- dashboardPage(
     ),
     tags$script(HTML("$('body').addClass('fixed');")),
     tags$div(
+      modal_start, # Modal with introduction
       style = "margin-top: 70px;",  # Add margin-top CSS style
       fluidRow(
         box(

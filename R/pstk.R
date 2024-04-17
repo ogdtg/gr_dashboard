@@ -1,3 +1,10 @@
+# load packages
+library(dplyr)
+library(echarts4r)
+library(tidyr)
+library(stringr)
+library(colorspace)
+
 #' Prepare Parteistaerke data
 #'
 #' @param data shinydata/pstk_gem.rds
@@ -262,4 +269,63 @@ render_pstk_chart <- function(pstk_data,selected_gemeinden){
 
 
   })
+}
+
+prepare_ptsk_list <- function(pstk_data, selected_gemeinden){
+
+  strongest_party_data <- pstk_data %>%
+    group_by(gemeinde_name) %>%
+    arrange(desc(share)) %>%
+    slice(1:2) %>%
+    ungroup() %>%
+    arrange(gemeinde_name) %>%
+    mutate(share = round(share,1))
+
+  partei_a1 <- strongest_party_data$abbr_de[1]
+  partei_a2 <- strongest_party_data$abbr_de[2]
+  partei_b1 <- strongest_party_data$abbr_de[3]
+  partei_b2 <- strongest_party_data$abbr_de[4]
+
+
+  anteil_a1 <- strongest_party_data$share[1]
+  anteil_a2 <- strongest_party_data$share[2]
+  anteil_b1 <- strongest_party_data$share[3]
+  anteil_b2 <- strongest_party_data$share[4]
+
+  result <- list(partei_a1,anteil_a1,partei_a2,anteil_a2,
+                 partei_b1,anteil_b1,partei_b2,anteil_b2)
+
+  name_results <- expand.grid(c("partei_","anteil_"),c("1_","2_"),sort(selected_gemeinden))
+
+  combination_strings <- apply(name_results, 1, function(x) paste0(x, collapse = ""))
+
+  names(result) <- combination_strings
+  return(result)
+
+}
+
+generate_bullets_pstk <- function(pstk_data , selected_gemeinden){
+
+
+
+  wl_list <- prepare_ptsk_list(pstk_data , selected_gemeinden)
+
+
+
+  bullets <- lapply(selected_gemeinden,function(gemeinde){
+    glue::glue("
+      <br>
+      <b>{gemeinde}</b>
+      <ul>
+        <li><i>Stärkste Partei:</i> <b>{wl_list[[paste0('partei_1_',gemeinde)]]}</b> ({wl_list[[paste0('anteil_1_',gemeinde)]]} %)</li>
+        <li><i>Zweitstärkste Partei:</i>:<b>{wl_list[[paste0('partei_2_',gemeinde)]]}</b> ({wl_list[[paste0('anteil_2_',gemeinde)]]} %)</li>
+      </ul>
+    ")
+  })
+
+  bullet_list <- paste0(bullets,collapse = "<br>")
+
+
+  HTML(bullet_list)
+
 }

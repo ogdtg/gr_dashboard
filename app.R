@@ -4,7 +4,7 @@
 # Define UI
 ui <- dashboardPage(
 
-  dashboardHeader(title = "Wahlkompass 2024",
+  dashboardHeader(title = "Wahlspiegel 2024",
                   tags$li(a(href = 'https://statistik.tg.ch/themen-und-daten/staat-und-politik/wahlen-und-abstimmungen/grossratswahlen.html/10545',
                             img(src = 'https://www.tg.ch/public/upload/assets/20/logo-kanton-thurgau.svg',
                                 title = "Company Home", height = "30px",
@@ -108,8 +108,7 @@ server <- function(input, output, session) {
 
 
     # Vektor of Selected Gemeinden
-    selected_gemeinden <-
-      sort(c(input$gemeinde_a, input$gemeinde_b)) # Sort vector for easier data processing
+    selected_gemeinden <-c(input$gemeinde_a, input$gemeinde_b) # Sort vector for easier data processing
     # Disadvantage of sorting: The order of the Bars in the Chart changes
 
     if (length(selected_gemeinden)==2 ){
@@ -153,7 +152,7 @@ server <- function(input, output, session) {
 
         # Generate Title election turnout
         output$wb_heading <- renderUI({
-          h3(wabt_text$title)
+          h3("Wo gingen mehr Wählerinnen und Wähler zur Urne?")
         })
 
 
@@ -162,7 +161,8 @@ server <- function(input, output, session) {
 
         # Generate Title Party Strength pstk_heading
         output$pstk_heading <- renderUI({
-          h3(generate_title_pstk(echart_pstk_data, selected_gemeinden))
+          # h3(generate_title_pstk(echart_pstk_data, selected_gemeinden))
+          h3("Welche Partei schnitt am besten ab?")
         })
 
         # Generate text Party Strength
@@ -171,7 +171,9 @@ server <- function(input, output, session) {
 
         # Generate title winlose
         output$winlose_heading <- renderUI({
-          h3(generate_title_winlose(echart_winlose_data, selected_gemeinden))
+          # h3(generate_title_winlose(echart_winlose_data, selected_gemeinden))
+          h3("Wer gewann oder verlor am meisten Parteistimmenanteile?")
+
         })
 
         # Generate text winlose

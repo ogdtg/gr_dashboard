@@ -24,6 +24,8 @@ prepare_wb_data <- function(data,selected_gemeinden){
     ungroup() %>%
     filter(gemeinde_name %in% selected_gemeinden) %>%
     group_by(gemeinde_name) %>%
+    mutate(gemeinde_name = factor(gemeinde_name,levels=selected_gemeinden)) %>%
+    arrange(gemeinde_name) %>%
     arrange(wahljahr)
 }
 
@@ -329,7 +331,7 @@ generate_wahlbeteiligung_bullets <- function(wb_data, selected_gemeinden,year,th
       <br>
       <b>{gemeinde}</b>
       <ul>
-        <li><i>Wahlbeteiligung:</i> <b>{wb_list[[gemeinde]][['wb']]}%</b> ({change_symbol} {abs_change} Prozentpunkte im Vergleich zur Grossratswahl 2020)</li>
+        <li><i>Wahlbeteiligung:</i> <b>{wb_list[[gemeinde]][['wb']]}%</b> ({change_symbol}{abs_change} Prozentpunkte im Vergleich zur Grossratswahl 2020)</li>
       </ul>
     ")
   })

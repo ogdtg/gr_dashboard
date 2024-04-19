@@ -27,6 +27,7 @@ prepare_pstk_data <- function(data,selected_gemeinden,year){
     ungroup() %>%
     filter(test<2) %>%
     group_by(gemeinde_name) %>%
+    mutate(gemeinde_name = factor(gemeinde_name,levels=selected_gemeinden)) %>%
     arrange(gemeinde_name)
 }
 
@@ -281,6 +282,7 @@ prepare_ptsk_list <- function(pstk_data, selected_gemeinden){
     arrange(desc(share)) %>%
     slice(1:2) %>%
     ungroup() %>%
+    mutate(gemeinde_name = factor(gemeinde_name,levels=selected_gemeinden)) %>%
     arrange(gemeinde_name) %>%
     mutate(share = round(share,1))
 
@@ -298,7 +300,7 @@ prepare_ptsk_list <- function(pstk_data, selected_gemeinden){
   result <- list(partei_a1,anteil_a1,partei_a2,anteil_a2,
                  partei_b1,anteil_b1,partei_b2,anteil_b2)
 
-  name_results <- expand.grid(c("partei_","anteil_"),c("1_","2_"),sort(selected_gemeinden))
+  name_results <- expand.grid(c("partei_","anteil_"),c("1_","2_"),selected_gemeinden)
 
   combination_strings <- apply(name_results, 1, function(x) paste0(x, collapse = ""))
 

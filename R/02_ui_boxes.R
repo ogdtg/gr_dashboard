@@ -2,11 +2,11 @@
 
 # Introduction Box
 start_box <- box(
-  h2("Wahlspiegel 2024"),
-  p("Auf diesem Dashboard können die Parteistärke, die Veränderung der Parteistärke im Zeitverlauf sowie die Wahlbeteiligung der 80 Thurgauer Gemeinden bei den Grossrtaswahlen 2024 miteinander verglichen werden.
+  h2("Herzlich Willkommen beim Wahlspiegel 2024"),
+  p("Auf diesem Dashboard können Sie die Parteistärken, die Veränderung der Parteistärken im Zeitverlauf sowie die Wahlbeteiligung in den 80 Thurgauer Gemeinden bei den Grossratswahlen 2024 miteinander verglichen.
             Wählen Sie über die Seitenleiste zwei Gemeinden zum Vergleich aus und klicken Sie sich durch unsere Daten."),
 
-  p("Sollten Ihnen etwas unklar sein, können sie gerne einen Blick in unser Tutorial werfen."),
+  p("Sollte Ihnen etwas unklar sein, können sie gerne einen Blick in unser Tutorial werfen."),
 
   actionButton("start_tutorial","Tutorial starten", icon = icon("graduation-cap")),
 
@@ -45,14 +45,14 @@ pstk_box <- box(
   },
   br(),
   echarts4rOutput("pstk_chart"),
-  p(tags$b("Lesehilfe:"), " Parteistaerke in % (Y-Achse) für die Grossratswahlen 2024 in den jeweiligen Gemeinden."),
+  p(tags$b("Lesehilfe:"), " Parteistärke in % (Y-Achse) für die Grossratswahlen 2024 in den jeweiligen Gemeinden."),
 
   width = 6,
   title = NULL,
   id = "pstk_box"
 )
 
-# Veränderung Parteistaerke
+# Veränderung Parteistärke
 winlose_box <- box(
   uiOutput("winlose_heading"),
   if(bullets){
@@ -62,7 +62,7 @@ winlose_box <- box(
   },
   br(),
   echarts4rOutput("winlose_chart"),
-  p(tags$b("Lesehilfe:"), " Veränderung der Parteistaerke im Vergleich zu den Grossratswahlen 2020 in Prozentpunkten (Y-Achse) in den jeweiligen Gemeinden."),
+  p(tags$b("Lesehilfe:"), " Veränderung der Parteistärke im Vergleich zu den Grossratswahlen 2020 in Prozentpunkten (Y-Achse) in den jeweiligen Gemeinden."),
 
   width = 6,
   title = NULL,
@@ -147,7 +147,7 @@ pstk_hist_box_b <- box(
 
 # Volle Zeitreighen box
 pstk_hist_box <- box(
-  h3("Veränderung der Parteistärken als Zeitreihe"),
+  h3("Wie entwickelten sich die Parteistimmenanteile im Zeitverlauf?"),
   p("Die Grafik zeigt die Veränderung der Parteistärken als Zeitreihe in einem sogenannten Area Chart. Je grösser die Fläche zu einem bestimmten Zeitpunkt, desto stärker die Partei."),
   p("Fahren sie mit der Maus über die Grafik, um die Parteistärken zum jeweiligen Zeitpunkt aufgelsitet zu sehen. Durch Klicken auf einen Parteinamen in der Legende, wird diese Partei deaktiviert und aus der Grfik entfernt. So können Sie ganz einfach einzelne Parteien miteinander vergleichen."),
 

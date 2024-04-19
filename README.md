@@ -76,6 +76,10 @@ Prepares data on election turnout (Wahlbeteiligung), creates texts and headings 
 
 Prepares data on party strength (Parteistärke), creates texts and headings as well as charts using echarts4r.
 
+### 041_pstk_history.R
+
+Prepares time series data on party strength and prepares headings as well as charts using echarts4r.
+
 ### 05_winlose.R
 
 Prepares data on changes party strength in comparision to the election in 2020 (Veränderung Parteistärke), creates texts and headings as well as charts using echarts4r.

@@ -46,6 +46,7 @@ prepare_winlose_data <- function(data,selected_gemeinden){
     filter(sum(abs(share))>0) %>%
     # mutate(color = ifelse(gemeinde_name == selected_gemeinden[1], adjust_transparency(color, 0.5), color)) %>%
     group_by(gemeinde_name) %>%
+      mutate(gemeinde_name = factor(gemeinde_name,levels=selected_gemeinden)) %>%
     arrange(gemeinde_name) %>%
     filter(!party %in% c("bdp", "uebrige")) %>%
     mutate(share = round(share, 1)) %>%
@@ -172,6 +173,7 @@ generate_title_winlose <- function(winlose_data , selected_gemeinden) {
     arrange(desc(share)) %>%
     slice(1) %>%
     ungroup() %>%
+      mutate(gemeinde_name = factor(gemeinde_name,levels=selected_gemeinden)) %>%
     arrange(gemeinde_name)
 
   partei1 <- winner_party_data$abbr_de[1]
@@ -316,8 +318,8 @@ generate_bullets_winlose <- function(winlose_data , selected_gemeinden){
       <br>
       <b>{gemeinde}</b>
       <ul>
-        <li><i>Grösster Gewinner:</i> <b>{wl_list[[paste0('winner_',gemeinde)]] %>% str_remove('die') %>% str_replace('Grünen','GRÜNE')}</b> ({wl_list[[paste0('win_',gemeinde)]]} Prozentpunkte Gewinn im Vergleich zu den Grossratswahlen 2020)</li>
-        <li><i>Grösster Verlierer</i>: <b>{wl_list[[paste0('loser_',gemeinde)]] %>% str_remove('die') %>% str_replace('Grünen','GRÜNE')}</b> ({wl_list[[paste0('loss_',gemeinde)]]} Prozentpunkte Verlust im Vergleich zu den Grossratswahlen 2020)</li>
+        <li><i>Grösste Gewinnerin:</i> <b>{wl_list[[paste0('winner_',gemeinde)]] %>% str_remove('die') %>% str_replace('Grünen','GRÜNE')}</b> ({wl_list[[paste0('win_',gemeinde)]]} Prozentpunkte Gewinn im Vergleich zu den Grossratswahlen 2020)</li>
+        <li><i>Grösste Verliererin:</i> <b>{wl_list[[paste0('loser_',gemeinde)]] %>% str_remove('die') %>% str_replace('Grünen','GRÜNE')}</b> ({wl_list[[paste0('loss_',gemeinde)]]} Prozentpunkte Verlust im Vergleich zu den Grossratswahlen 2020)</li>
       </ul>
     ")
   })

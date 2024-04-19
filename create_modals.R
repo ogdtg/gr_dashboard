@@ -40,7 +40,7 @@ saveRDS(modal_3,"shinydata/modal_3.rds")
 
 
 modal_4 <- modalDialog(
-  title = tags$b("Parteistaerke"),
+  title = tags$b("Parteistärke"),
   p("Die Parteistärke für alle Parteien ist in Prozent angegeben. Der Datensatz, welcher diese Informationen enthält findet sich ",tags$a("hier",href = "https://data.tg.ch/explore/dataset/sk-stat-9/table/?sort=wahljahr")," auf data.tg.ch"),
   tags$img(src = "parteistaerke.PNG", width = "100%"),
   footer = list(actionButton("last_modal", label = "Zurück"),actionButton("next_modal", label = "Weiter"), modalButton("Schliessen")),
@@ -143,11 +143,11 @@ saveRDS(modal_10,"shinydata/modal_10.rds")
 
 modal_start <- modalDialog(
   title = tags$b("Herzlich Willkommen beim Wahlspiegel 2024"),
-  p("Auf diesem Dashboard können die Parteistärke, die Veränderung der Parteistärke im Zeitverlauf sowie die Wahlbeteiligung der 80 Thurgauer Gemeinden bei den Grossrtaswahlen 2024 miteinander verglichen werden.
+  p("Auf diesem Dashboard können die Parteistärke, die Veränderung der Parteistärke im Zeitverlauf sowie die Wahlbeteiligung der 80 Thurgauer Gemeinden bei den Grossratswahlen 2024 miteinander verglichen werden.
             Wählen Sie über die Seitenleiste zwei Gemeinden zum Vergleich aus und klicken Sie sich durch unsere Daten."),
   p("Sollten Sie eine nähere Einführung in die Funktionsweise benötigen, klicken Sie einfach auf den Button 'Tutorial starten'"),
   br(),
-  p("Das Team der Dienststelle für Statistik wünscht Ihnen viel Spass!"),
+  p("Das Team der Dienststelle für Statistik wünscht Ihnen viele wertvolle Erkenntnisse!"),
   tags$img(src = "dashboard.gif", width = "100%"),
   footer = list(actionButton("close_modal_start","Los geht's")),
   fade = TRUE,

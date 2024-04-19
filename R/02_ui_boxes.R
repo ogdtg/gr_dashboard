@@ -2,8 +2,8 @@
 
 # Introduction Box
 start_box <- box(
-  h2("Wahlkompass 2024"),
-  p("Auf diesem Dashboard können die Parteistärke, die Veränderung der Parteistärke im Zeitbverlauf sowie die Wahlbeteiligung der 80 Thurgauer Gemeinden bei den Grossrtaswahlen 2024 miteinander verglichen werden.
+  h2("Wahlspiegel 2024"),
+  p("Auf diesem Dashboard können die Parteistärke, die Veränderung der Parteistärke im Zeitverlauf sowie die Wahlbeteiligung der 80 Thurgauer Gemeinden bei den Grossrtaswahlen 2024 miteinander verglichen werden.
             Wählen Sie über die Seitenleiste zwei Gemeinden zum Vergleich aus und klicken Sie sich durch unsere Daten."),
 
   p("Sollten Ihnen etwas unklar sein, können sie gerne einen Blick in unser Tutorial werfen."),
@@ -45,7 +45,7 @@ pstk_box <- box(
   },
   br(),
   echarts4rOutput("pstk_chart"),
-  p(tags$b("Lesehilfe:"), " Parteistaerke in % (Y-Achse) für die Grossratswahlen 2004 in den jeweiligen Gemeinden."),
+  p(tags$b("Lesehilfe:"), " Parteistaerke in % (Y-Achse) für die Grossratswahlen 2024 in den jeweiligen Gemeinden."),
 
   width = 6,
   title = NULL,
@@ -62,7 +62,7 @@ winlose_box <- box(
   },
   br(),
   echarts4rOutput("winlose_chart"),
-  p(tags$b("Lesehilfe:"), " Veränderung der Parteistaerke im Vergleich zur Grossratswahl 2020 in Prozentpunkten (Y-Achse) in den jeweiligen Gemeinden."),
+  p(tags$b("Lesehilfe:"), " Veränderung der Parteistaerke im Vergleich zu den Grossratswahlen 2020 in Prozentpunkten (Y-Achse) in den jeweiligen Gemeinden."),
 
   width = 6,
   title = NULL,

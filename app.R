@@ -3,6 +3,7 @@
 
 # Define UI
 ui <- dashboardPage(
+
   dashboardHeader(title = "Wahlkompass 2024",
                   tags$li(a(href = 'https://statistik.tg.ch/themen-und-daten/staat-und-politik/wahlen-und-abstimmungen/grossratswahlen.html/10545',
                             img(src = 'https://www.tg.ch/public/upload/assets/20/logo-kanton-thurgau.svg',
@@ -18,8 +19,19 @@ ui <- dashboardPage(
   dashboardBody(
     shinybrowser::detect(),
     tags$head(
-      includeCSS("www/dashboard_style.css"),
+      includeCSS("www/dashboard_style.css")
     ),
+    HTML('<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>'),
+    tags$script(HTML(
+      '
+    $(document).on("shiny:connected", function(){
+      var newUser = Cookies.get("new_user");
+      if(newUser === "false") return;
+      Shiny.setInputValue("new_user", true);
+      Cookies.set("new_user", false);
+    });
+    '
+    )),
     tags$script(HTML("$('body').addClass('fixed');")),
     tags$div(
       style = "margin-top: 70px;",  # Add margin-top CSS style
@@ -42,7 +54,12 @@ ui <- dashboardPage(
 server <- function(input, output, session) {
 
   # Show Introduction at start up of App
-  showModal(modal_start) # Modal with introduction
+  # showModal(modal_start)
+  observeEvent(input$new_user, {
+    req(input$new_user)
+    showModal(modal_start)
+    })
+
 
 
   # Close Introduction Modal when "Los geht's" i clicked

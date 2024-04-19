@@ -11,7 +11,9 @@ library(colorspace)
 
 bullets <- TRUE
 
-partycolor <- readRDS("shinydata/partycolor.rds")
+partycolor <- readRDS("shinydata/partycolor.rds")  %>%
+  mutate(abbr_de = str_replace(abbr_de,"Grüne","GRÜNE"))
+
 gemeinden_vec <- sort(readRDS("shinydata/gemeinden_vec.rds"))
 year <- 2024
 election_year <- year

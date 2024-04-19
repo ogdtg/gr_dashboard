@@ -142,8 +142,8 @@ saveRDS(modal_10,"shinydata/modal_10.rds")
 # start modal
 
 modal_start <- modalDialog(
-  title = tags$b("Herzlich Willkommen beim Wahlkompass 2024"),
-  p("Auf diesem Dashboard können die Parteistärke, die Veränderung der Parteistärke im Zeitbverlauf sowie die Wahlbeteiligung der 80 Thurgauer Gemeinden bei den Grossrtaswahlen 2024 miteinander verglichen werden.
+  title = tags$b("Herzlich Willkommen beim Wahlspiegel 2024"),
+  p("Auf diesem Dashboard können die Parteistärke, die Veränderung der Parteistärke im Zeitverlauf sowie die Wahlbeteiligung der 80 Thurgauer Gemeinden bei den Grossrtaswahlen 2024 miteinander verglichen werden.
             Wählen Sie über die Seitenleiste zwei Gemeinden zum Vergleich aus und klicken Sie sich durch unsere Daten."),
   p("Sollten Sie eine nähere Einführung in die Funktionsweise benötigen, klicken Sie einfach auf den Button 'Tutorial starten'"),
   br(),

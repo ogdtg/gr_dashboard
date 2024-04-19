@@ -316,8 +316,8 @@ generate_bullets_winlose <- function(winlose_data , selected_gemeinden){
       <br>
       <b>{gemeinde}</b>
       <ul>
-        <li><i>Grösster Gewinner:</i> <b>{wl_list[[paste0('winner_',gemeinde)]] %>% str_remove('die') %>% str_replace('Grünen','GRÜNE')}</b> ({wl_list[[paste0('win_',gemeinde)]]} Prozentpunkte Gewinn im Vergleich zu den Wahlen 2020)</li>
-        <li><i>Grösster Verlierer</i>: <b>{wl_list[[paste0('loser_',gemeinde)]] %>% str_remove('die') %>% str_replace('Grünen','GRÜNE')}</b> ({wl_list[[paste0('loss_',gemeinde)]]} Prozentpunkte Verlust im Vergleich zu den Wahlen 2020)</li>
+        <li><i>Grösster Gewinner:</i> <b>{wl_list[[paste0('winner_',gemeinde)]] %>% str_remove('die') %>% str_replace('Grünen','GRÜNE')}</b> ({wl_list[[paste0('win_',gemeinde)]]} Prozentpunkte Gewinn im Vergleich zu den Grossratswahlen 2020)</li>
+        <li><i>Grösster Verlierer</i>: <b>{wl_list[[paste0('loser_',gemeinde)]] %>% str_remove('die') %>% str_replace('Grünen','GRÜNE')}</b> ({wl_list[[paste0('loss_',gemeinde)]]} Prozentpunkte Verlust im Vergleich zu den Grossratswahlen 2020)</li>
       </ul>
     ")
   })

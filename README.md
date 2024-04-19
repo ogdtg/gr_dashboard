@@ -2,7 +2,7 @@
 
 This dashboard visualizes the comparison of election results for Gemeinden at the Grossratswahlen 2024 in Thurgau.
 
-The dashboard can be accessed [here]().
+The dashboard can be accessed [here](https://statistiktg.shinyapps.io/gr_dashboard/).
 
 
 # Content

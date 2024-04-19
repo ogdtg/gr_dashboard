@@ -9,13 +9,15 @@ if (!requireNamespace("odsAPI", quietly = TRUE)) {
 }
 library(tidyverse)
 library(odsAPI)
-source("panasch.R")
+source("R/06_panasch.R")
 
 odsAPI::set_domain("kantonthurgau.opendatasoft.com")
 election_year <- 2024
 
 # Data from SRF
-partycolor <- readRDS("shinydata/partycolor.rds")
+partycolor <- readRDS("shinydata/partycolor.rds") %>%
+  mutate(abbr_de = str_replace(abbr_de,"Grüne","GRÜNE"))
+
 
 # Manual matching lit -> party
 listen <- readRDS("shinydata/listen.rds")
@@ -61,7 +63,7 @@ saveRDS(win_lose,"shinydata/win_lose.rds")
 
 wb_data <- get_dataset(dataset_id="sk-stat-11")
 
-saveRDS(win_lose,"shinydata/wb_data.rds")
+saveRDS(wb_data,"shinydata/wb_data.rds")
 
 
 # Wahlzettel

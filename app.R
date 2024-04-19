@@ -1,8 +1,3 @@
-library(shiny)
-library(shinydashboard)
-
-
-
 # Start the App over the "Run App" button in the top right corner of R Studio
 
 
@@ -30,10 +25,12 @@ ui <- dashboardPage(
       style = "margin-top: 70px;",  # Add margin-top CSS style
       fluidRow(
         start_box, # Introduction
-        wb_box, # Wahlbeteiligung
         pstk_box, # Parteistaerke
         winlose_box, # Veränderung Parteistaerke
-        panasch_box, #Panaschierstatistik
+        # panasch_box, #Panaschierstatistik
+        pstk_hist_box, # Historische Veränderung Parteistärke
+        wb_box, # Wahlbeteiligung
+        link_box,
         end_box # End box
 
       )
@@ -66,7 +63,7 @@ server <- function(input, output, session) {
 
   # Click "Weiter" to load next modal
   observeEvent(input$next_modal,{
-    if (click_count()==7){
+    if (click_count()==9){
       removeModal()
       click_count <- reactiveVal(1)
     } else{
@@ -118,17 +115,20 @@ server <- function(input, output, session) {
         echart_pstk_data <-
           prepare_pstk_data(pstk_gem, selected_gemeinden, year = year)
 
+        # Data on historic changes
+        pstk_hist_data <- prepare_pstk_hist_data(pstk_gem,selected_gemeinden)
+
 
         # Data to visualize panasch a
-        echart_sankey_data_a <-
-          prepare_sankey_panasch_data(panasch_data, input$gemeinde_a)
-        echart_sankey_data_b <-
-          prepare_sankey_panasch_data(panasch_data, input$gemeinde_b)
+        # echart_sankey_data_a <-
+        #   prepare_sankey_panasch_data(panasch_data, input$gemeinde_a)
+        # echart_sankey_data_b <-
+        #   prepare_sankey_panasch_data(panasch_data, input$gemeinde_b)
 
 
         # Data on attraktivitaet of a party
-        attrakt_a <- prepare_attrakt_data_gemeinden(attrakt_data = attrakt,gemeinde = input$gemeinde_a)
-        attrakt_b <- prepare_attrakt_data_gemeinden(attrakt_data = attrakt,gemeinde = input$gemeinde_b)
+        # attrakt_a <- prepare_attrakt_data_gemeinden(attrakt_data = attrakt,gemeinde = input$gemeinde_a)
+        # attrakt_b <- prepare_attrakt_data_gemeinden(attrakt_data = attrakt,gemeinde = input$gemeinde_b)
 
         # Generate Text and title election turnout
         wabt_text <- generate_wahlbeteiligung_bullets(wb_data, selected_gemeinden, year = year, threshold)
@@ -162,18 +162,27 @@ server <- function(input, output, session) {
 
 
         # Generate Box Gemeinde A heading
-        output$gemeinde_a_heading <- renderUI({
-          h3(generate_title_panasch(attrakt_data = attrakt_a,gemeinde = input$gemeinde_a))
-        })
+        # output$gemeinde_a_heading <- renderUI({
+        #   h3(generate_title_panasch(attrakt_data = attrakt_a,gemeinde = input$gemeinde_a))
+        # })
 
         # Generate Box Gemeinde B heading
+        # output$gemeinde_b_heading <- renderUI({
+        #   h3(generate_title_panasch(attrakt_data = attrakt_b,gemeinde = input$gemeinde_b))
+        # })
+
+        # Title for Historic changes
+        output$gemeinde_a_heading <- renderUI({
+          h3(selected_gemeinden[1])
+        })
+
         output$gemeinde_b_heading <- renderUI({
-          h3(generate_title_panasch(attrakt_data = attrakt_b,gemeinde = input$gemeinde_b))
+          h3(selected_gemeinden[2])
         })
 
         # Render Panasch text
-        output$panasch_text_a <- render_panasch_text(sankey_panasch_data = echart_sankey_data_a,attrakt_data = attrakt_a,gemeinde = input$gemeinde_a)
-        output$panasch_text_b <- render_panasch_text(sankey_panasch_data = echart_sankey_data_b,attrakt_data = attrakt_b,gemeinde = input$gemeinde_b)
+        # output$panasch_text_a <- render_panasch_text(sankey_panasch_data = echart_sankey_data_a,attrakt_data = attrakt_a,gemeinde = input$gemeinde_a)
+        # output$panasch_text_b <- render_panasch_text(sankey_panasch_data = echart_sankey_data_b,attrakt_data = attrakt_b,gemeinde = input$gemeinde_b)
 
 
 
@@ -191,11 +200,20 @@ server <- function(input, output, session) {
           render_winlose_chart(echart_winlose_data, selected_gemeinden, year)
 
         # Panaschierstatistik
-        output$panasch_chart_a <-
-          render_panasch_chart(echart_sankey_data_a,partycolor=partycolor)
+        # output$panasch_chart_a <-
+        #   render_panasch_chart(echart_sankey_data_a,partycolor=partycolor)
+        #
+        # output$panasch_chart_b <-
+        #   render_panasch_chart(echart_sankey_data_b,partycolor=partycolor)
+        #
 
-        output$panasch_chart_b <-
-          render_panasch_chart(echart_sankey_data_b,partycolor=partycolor)
+        output$pstk_hist_chart_b <-
+          render_pstk_hist_chart(pstk_hist_data, selected_gemeinden[1])
+
+        output$pstk_hist_chart_a <-
+          render_pstk_hist_chart(pstk_hist_data, selected_gemeinden[2])
+
+
       } else {
 
         # Modal if the same Gemeinde is selected twice

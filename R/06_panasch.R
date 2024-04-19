@@ -315,7 +315,8 @@ generate_text_panasch_gemeinde <- function(sankey_panasch_data,attrakt_data , ge
 
   attrakt_gemeinden <- prepare_attrakt_data_gemeinden(attrakt_data,gemeinde) %>%
     arrange(desc(attrakt)) %>%
-    mutate(partei = str_replace_all(partei,"GRÜNE$","GRÜNEN"))
+    mutate(partei = str_replace_all(partei,"GRÜNE$","GRÜNEN")) %>%
+    filter(!partei %in% c("MASS-VOLL","DSM"))
 
 
   largest <- sankey_panasch_data %>%
@@ -397,7 +398,9 @@ generate_title_panasch <- function(attrakt_data, gemeinde) {
 
   attrakt_gemeinden <- prepare_attrakt_data_gemeinden(attrakt_data,gemeinde) %>%
     arrange(desc(attrakt)) %>%
-    mutate(partei = str_replace_all(partei,"GRÜNE$","GRÜNEN"))
+    mutate(partei = str_replace_all(partei,"GRÜNE$","GRÜNEN")) %>%
+    filter(!partei %in% c("MASS-VOLL","DSM"))
+
 
   partei1 <- attrakt_gemeinden$partei[1]
 
@@ -427,7 +430,9 @@ generate_bullets_panasch <- function(sankey_panasch_data,attrakt_data , gemeinde
 
 
   attrakt_gemeinden <- prepare_attrakt_data_gemeinden(attrakt_data,gemeinde) %>%
-    arrange(desc(attrakt))
+    arrange(desc(attrakt)) %>%
+    filter(!partei %in% c("MASS-VOLL","DSM"))
+
 
 
   largest <- sankey_panasch_data %>%
@@ -443,8 +448,8 @@ generate_bullets_panasch <- function(sankey_panasch_data,attrakt_data , gemeinde
       <ul>
         <li><i>Stärkster Panaschierfluss:</i> <b>{largest$from[1]}</b> &rarr; <b>{largest$to[1]}</b> ({round(largest$panasch[1],1)} Panaschierstimmen pro 1000 Wahlzettel der Herkunftspartei und kandidierender Person der Empfängerpartei.)</li>
         <li><i>Schwächster Panaschierfluss:</i> <b>{smallest$from[1]}</b> &rarr; <b>{smallest$to[1]}</b> ({round(smallest$panasch[1],1)} Panaschierstimmen pro 1000 Wahlzettel der Herkunftspartei und kandidierender Person der Empfängerpartei.)</li>
-        <li><i>Attraktivste Partei:</i> <b>{attrakt_gemeinden$partei[1]}</b> (erhielt {round(attrakt_gemeinden$attrakt[1],1)} Panaschierstimmen je kandidierender Person auf 1000 parteifremden Wahlzetteln.)</li>
-        <li><i>Attraktivste Partei:</i> <b>{attrakt_gemeinden$partei[nrow(attrakt_gemeinden)]}</b> (erhielt {round(attrakt_gemeinden$attrakt[nrow(attrakt_gemeinden)],1)} Panaschierstimmen je kandidierender Person auf 1000 parteifremden Wahlzetteln.)</li>
+        <li><i>'Attraktivste' Partei:</i> <b>{attrakt_gemeinden$partei[1]}</b> (erhielt {round(attrakt_gemeinden$attrakt[1],1)} Panaschierstimmen je kandidierender Person auf 1000 parteifremden Wahlzetteln.)</li>
+        <li><i>'Unattraktivste' Partei:</i> <b>{attrakt_gemeinden$partei[nrow(attrakt_gemeinden)]}</b> (erhielt {round(attrakt_gemeinden$attrakt[nrow(attrakt_gemeinden)],1)} Panaschierstimmen je kandidierender Person auf 1000 parteifremden Wahlzetteln.)</li>
 
       </ul>
     ")

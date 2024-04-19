@@ -39,18 +39,37 @@ prepare_wb_data <- function(data,selected_gemeinden){
 #'
 render_wb_chart <- function(wb_data,selected_gemeinden){
 
+  js_formatter <- "
+    function(params) {
+  // Define the bold heading
+  var heading = '<strong>' + params[0].axisValueLabel + '</strong><br />';
+  // Concatenate the heading with the tooltip content for each series
+  var content = params.map(function(item) {
+    // Get the color of the series as a circle
+    var colorCircle = '<span style=\"display:inline-block;margin-right:5px;border-radius:50%;width:10px;height:10px;background-color:' + item.color + ';\"></span>';
+    // Format the value with a % sign and make it bold and right-aligned
+    var value = '<span style=\"float:right;font-weight:bold;\">' + item.value[1] + '%</span>';
+    return colorCircle + '<span>' + item.seriesName + ': </span>' + value + '<br />';
+  }).join('');
+  // Combine the heading and content
+  return heading + content;
+    }"
+
+  # js_formatter <- "
+  #     function(params){
+  #       return('<strong>' +  params.value[0] +
+  #               '</strong><br />Gemeinde: ' + params.name +
+  #               '<br />Wahlbeteiligung : ' + params.value[1] + '%')
+  #               }"
+
   renderEcharts4r({
     wb_chart <- wb_data %>%
       e_charts(wahljahr) %>%
-      e_bar(wahlbeteiligung_in_prozent ,bind = gemeinde_name) %>%
+      e_line(wahlbeteiligung_in_prozent ,bind = gemeinde_name) %>%
       e_color(color = c("#0000004D","black")) %>%
       e_tooltip(
-        formatter = htmlwidgets::JS(paste0("
-      function(params){
-        return('<strong>' +  params.value[0] +
-                '</strong><br />Gemeinde: ' + params.name +
-                '<br />Wahlbeteiligung : ' + params.value[1] + '%')
-                }"))) %>%
+        trigger = "axis",
+        formatter = htmlwidgets::JS(js_formatter)) %>%
       e_axis_labels(
         x = "",
         y = "Wahlbeteiligung in %"

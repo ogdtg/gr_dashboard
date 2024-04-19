@@ -37,28 +37,28 @@ prepare_pstk_data <- function(data,selected_gemeinden,year){
 
 
 formulierungen_pstk_title_dif <- c(
-  "In Gemeinde A setzt man auf Partei X, in Gemeinde B herrscht Partei Y",
-  "Partei X dominiert Gemeinde A, während Partei Y in Gemeinde B führt",
-  "Partei X ist in Gemeinde A vorne, während Partei Y in Gemeinde B die Mehrheit hat",
+  # "In Gemeinde A setzt man auf Partei X, in Gemeinde B herrscht Partei Y",
+  # "Partei X dominiert Gemeinde A, während Partei Y in Gemeinde B führt",
+  # "Partei X ist in Gemeinde A vorne, während Partei Y in Gemeinde B die Mehrheit hat",
   "Gemeinde A favorisiert Partei X, während in Gemeinde B Partei Y die Oberhand hat",
-  "Partei X führt in Gemeinde A, während Partei Y in Gemeinde B die Spitze hält",
+  # "Partei X führt in Gemeinde A, während Partei Y in Gemeinde B die Spitze hält",
   "In Gemeinde A hat Partei X die Nase vorn, in Gemeinde B ist es Partei Y",
-  "Partei X gewinnt in Gemeinde A, während in Gemeinde B Partei Y die stärkste Kraft ist",
-  "Gemeinde A unterstützt Partei X, in Gemeinde B setzt man auf Partei Y",
-  "Partei X regiert in Gemeinde A, während Partei Y in Gemeinde B die Szene beherrscht",
-  "Gemeinde A schwört auf Partei X, in Gemeinde B hat Partei Y die Mehrheit"
+  "Partei X gewinnt in Gemeinde A, während in Gemeinde B Partei Y die stärkste Kraft ist"
+  # "Gemeinde A unterstützt Partei X, in Gemeinde B setzt man auf Partei Y",
+  # "Partei X regiert in Gemeinde A, während Partei Y in Gemeinde B die Szene beherrscht",
+  # "Gemeinde A schwört auf Partei X, in Gemeinde B hat Partei Y die Mehrheit"
 )
 
 formulierungen_pstk_title_same <- c(
   "Partei X dominiert in Gemeinde A und Gemeinde B.",
   "Gemeinde A und Gemeinde B setzen auf Partei X.",
-  "Partei X ist die unangefochtene Nummer eins in Gemeinde A und Gemeinde B",
-  "In Gemeinde A und Gemeinde B hält Partei X die Führung fest im Griff",
+  "Partei X ist die Nummer eins in Gemeinde A und Gemeinde B",
+  "In Gemeinde A und Gemeinde B liegt Partei X ganz vorne",
   "Partei X triumphiert sowohl in Gemeinde A als auch in Gemeinde B",
   "Die Wähler in Gemeinde A und Gemeinde B vertrauen auf Partei X",
-  "Partei X führt souverän in Gemeinde A und Gemeinde B",
-  "In Gemeinde A und Gemeinde B ist Partei X die klare Gewinnerin",
-  "Partei X thront an der Spitze von Gemeinde A und Gemeinde B"#,
+  "Partei X führt in Gemeinde A und Gemeinde B"
+  # "In Gemeinde A und Gemeinde B ist Partei X die klare Gewinnerin",
+  # "Partei X thront an der Spitze von Gemeinde A und Gemeinde B"#,
   # "Gemeinde A und Gemeinde B stehen eindeutig hinter Partei X."
 )
 
@@ -321,7 +321,7 @@ generate_bullets_pstk <- function(pstk_data , selected_gemeinden){
       <b>{gemeinde}</b>
       <ul>
         <li><i>Stärkste Partei:</i> <b>{wl_list[[paste0('partei_1_',gemeinde)]]}</b> ({wl_list[[paste0('anteil_1_',gemeinde)]]} %)</li>
-        <li><i>Zweitstärkste Partei:</i>:<b>{wl_list[[paste0('partei_2_',gemeinde)]]}</b> ({wl_list[[paste0('anteil_2_',gemeinde)]]} %)</li>
+        <li><i>Zweitstärkste Partei:</i> <b>{wl_list[[paste0('partei_2_',gemeinde)]]}</b> ({wl_list[[paste0('anteil_2_',gemeinde)]]} %)</li>
       </ul>
     ")
   })

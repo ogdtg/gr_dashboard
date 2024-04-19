@@ -19,7 +19,7 @@ customize_echart <- function(echart){
 
 
   echart$x$opts$yAxis[[1]]$nameLocation <- "middle"
-  echart$x$opts$yAxis[[1]]$nameGap <- 50
+  echart$x$opts$yAxis[[1]]$nameGap <- 35
   echart$x$opts$yAxis[[1]]$nameTextStyle  <- list(color = "black",fontSize = 14)
   echart$x$opts$tooltip$position <- "top"
 

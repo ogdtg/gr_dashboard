@@ -53,19 +53,14 @@ Loads various datasets from RDS files stored in the "shinydata" folder:
 - Shows an interactive chart (echarts4rOutput) for visualizing the change in party strength compared to the Grossratswahl 2020.
 - Provides a legend for interpreting the chart.
 
-#### Panaschierstatistik A (Panasch Statistics A)
-- Displays the heading and text related to Panasch Statistics for Gemeinde A.
-- Shows an interactive chart (echarts4rOutput) for visualizing Panasch Statistics.
+#### Veränderung Parteistärke über Zeit A
+- Displays the heading
+- Shows an interactive chart (Area Chart) for visualizing time series data on party strength.
 
-#### Panaschierstatistik B (Panasch Statistics B)
-- Displays the heading and text related to Panasch Statistics for Gemeinde B.
-- Shows an interactive chart (echarts4rOutput) for visualizing Panasch Statistics.
+#### Veränderung Parteistärke über Zeit B
+- Displays the heading 
+- Shows an interactive chart (Area Chart) for visualizing time series data on party strength.
 
-#### Volle Panaschierstatistik (Full Panasch Statistics)
-- Provides an explanation of Panasch Statistics and its calculation.
-- Contains links to resources for understanding the concept and accessing the datasets used.
-- Displays visualizations of Panasch Statistics for both Gemeinde A and Gemeinde B.
-- Provides a legend for interpreting the visualizations.
 
 #### End Box
 - Displays contact information for the Statistik Office and the address.

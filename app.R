@@ -172,7 +172,7 @@ server <- function(input, output, session) {
         # Generate title winlose
         output$winlose_heading <- renderUI({
           # h3(generate_title_winlose(echart_winlose_data, selected_gemeinden))
-          h3("Wer gewann oder verlor am meisten Parteistimmenanteile?")
+          h3("Wer gewann oder verlor am meisten Parteistärke?")
 
         })
 

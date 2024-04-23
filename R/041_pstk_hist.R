@@ -21,7 +21,7 @@ prepare_pstk_hist_data <- function(pstk_gem,selected_gemeinden){
   expand.grid(unique(pstk_hist_data$abbr_de),as.character(seq(2008,2024,4))) %>%
     setNames(c("abbr_de","wahljahr")) %>%
     left_join(pstk_hist_data %>%
-                select(wahljahr, gemeinde_name,abbr_de,name_de,share,color)) %>%
+                select(wahljahr, gemeinde_name,abbr_de,name_de,share,color),multiple = "all") %>%
     mutate(share = ifelse(is.na(share),0,share))
 
 }
@@ -34,9 +34,11 @@ prepare_pstk_hist_data <- function(pstk_gem,selected_gemeinden){
 #'
 render_pstk_hist_chart <- function(pstk_hist_data, gemeinde) {
   js_formatter <- "
-    function(params) {
+function(params) {
   // Define the bold heading
   var heading = '<strong>' + params[0].axisValueLabel + '</strong><br />';
+  // Reverse the order of tooltip items
+  params = params.reverse();
   // Concatenate the heading with the tooltip content for each series
   var content = params.map(function(item) {
     // Get the color of the series as a circle
@@ -47,7 +49,7 @@ render_pstk_hist_chart <- function(pstk_hist_data, gemeinde) {
   }).join('');
   // Combine the heading and content
   return heading + content;
-    }"
+}"
 
   base_area <- pstk_hist_data %>%
     filter(gemeinde_name == gemeinde) %>%

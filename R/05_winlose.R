@@ -314,17 +314,30 @@ generate_bullets_winlose <- function(winlose_data , selected_gemeinden){
   names(wl_list) <- names(wl_list) %>% str_replace_all("_b",paste0("_",selected_gemeinden[2]))
 
   bullets <- lapply(selected_gemeinden,function(gemeinde){
+
+    change_win <- wl_list[[paste0('win_',gemeinde)]]
+    abs_change_win <- abs(change_win) %>% round(1)
+    change_symbol_win <- ifelse(change_win>0,"+",
+                            ifelse(change_win==0,"+–",
+                                   ifelse(change_win<0,"–","")))
+
+    change_loss <- wl_list[[paste0('loss_',gemeinde)]]
+    abs_change_loss <- abs(change_loss) %>% round(1)
+    change_symbol_loss <- ifelse(change_loss>0,"+",
+                                ifelse(change_loss==0,"+–",
+                                       ifelse(change_loss<0,"–","")))
+
     glue::glue("
       <br>
       <b>{gemeinde}</b>
       <ul>
-        <li><i>Grösste Gewinnerin:</i> <b>{wl_list[[paste0('winner_',gemeinde)]] %>% str_remove('die') %>% str_replace('Grünen','GRÜNE')}</b> ({wl_list[[paste0('win_',gemeinde)]]} Prozentpunkte Gewinn im Vergleich zu den Grossratswahlen 2020)</li>
-        <li><i>Grösste Verliererin:</i> <b>{wl_list[[paste0('loser_',gemeinde)]] %>% str_remove('die') %>% str_replace('Grünen','GRÜNE')}</b> ({wl_list[[paste0('loss_',gemeinde)]]} Prozentpunkte Verlust im Vergleich zu den Grossratswahlen 2020)</li>
+        <li><i>Grösste Gewinnerin:</i> <b>{wl_list[[paste0('winner_',gemeinde)]] %>% str_remove('die') %>% str_replace('Grünen','GRÜNE')}</b> ({change_symbol_win}{abs_change_win} Prozentpunkte Gewinn im Vergleich zu den Grossratswahlen 2020)</li>
+        <li><i>Grösste Verliererin:</i> <b>{wl_list[[paste0('loser_',gemeinde)]] %>% str_remove('die') %>% str_replace('Grünen','GRÜNE')}</b> ({change_symbol_loss}{abs_change_loss} Prozentpunkte Verlust im Vergleich zu den Grossratswahlen 2020)</li>
       </ul>
     ")
   })
 
-  bullet_list <- paste0(bullets,collapse = "<br>")
+  bullet_list <- paste0(bullets,collapse = "")
 
 
   HTML(bullet_list)

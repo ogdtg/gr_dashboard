@@ -76,6 +76,9 @@ render_wb_chart <- function(wb_data,selected_gemeinden){
         x = "",
         y = "Wahlbeteiligung in %"
       )
+    wb_chart$x$opts$series[[1]]$lineStyle <- list(width=4)
+    wb_chart$x$opts$series[[2]]$lineStyle <- list(width=4)
+
     customize_echart(wb_chart)
 
   })
@@ -324,8 +327,8 @@ generate_wahlbeteiligung_bullets <- function(wb_data, selected_gemeinden,year,th
     change <- wb_list[[gemeinde]][['wb']]-wb_list[[gemeinde]][['wb_last']]
     abs_change <- abs(change) %>% round(1)
     change_symbol <- ifelse(change>0,"+",
-                            ifelse(change==0,"+-",
-                                   ifelse(change<0,"-","")))
+                            ifelse(change==0,"+–",
+                                   ifelse(change<0,"–","")))
 
     glue::glue("
       <br>

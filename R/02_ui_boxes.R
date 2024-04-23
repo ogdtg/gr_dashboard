@@ -2,14 +2,16 @@
 
 # Introduction Box
 start_box <- box(
-  h2("Herzlich Willkommen beim Wahlspiegel 2024"),
+  h2("Grossratswahlen 2024: Gemeinden im Vergleich"),
   p("Auf diesem Dashboard können Sie die Parteistärken, die Veränderung der Parteistärken im Zeitverlauf sowie die Wahlbeteiligung in den 80 Thurgauer Gemeinden bei den Grossratswahlen 2024 miteinander verglichen.
             Wählen Sie über die Seitenleiste zwei Gemeinden zum Vergleich aus und klicken Sie sich durch unsere Daten."),
 
   p("Sollte Ihnen etwas unklar sein, können sie gerne einen Blick in unser Tutorial werfen."),
 
   actionButton("start_tutorial","Tutorial starten", icon = icon("graduation-cap")),
-
+  br(),
+  br(),
+  p(tags$b("Alle Texte und Grafiken basieren auf Open Governmnet Data, die über ",tags$a("data.tg.ch",href = "https://data.tg.ch/pages/start/")," bezogen werden können.")),
 
   width = 12,
   title = NULL,
@@ -47,7 +49,7 @@ pstk_box <- box(
   echarts4rOutput("pstk_chart"),
   p(tags$b("Lesehilfe:"), " Parteistärke in % (Y-Achse) für die Grossratswahlen 2024 in den jeweiligen Gemeinden."),
 
-  width = 6,
+  width = 12,
   title = NULL,
   id = "pstk_box"
 )
@@ -64,7 +66,7 @@ winlose_box <- box(
   echarts4rOutput("winlose_chart"),
   p(tags$b("Lesehilfe:"), " Veränderung der Parteistärke im Vergleich zu den Grossratswahlen 2020 in Prozentpunkten (Y-Achse) in den jeweiligen Gemeinden."),
 
-  width = 6,
+  width = 12,
   title = NULL,
   id = "winlose_box"
 )
@@ -147,9 +149,10 @@ pstk_hist_box_b <- box(
 
 # Volle Zeitreighen box
 pstk_hist_box <- box(
-  h3("Wie entwickelten sich die Parteistimmenanteile im Zeitverlauf?"),
+  h3("Wie entwickelten sich die Parteistärken?"),
   p("Die Grafik zeigt die Veränderung der Parteistärken als Zeitreihe in einem sogenannten Area Chart. Je grösser die Fläche zu einem bestimmten Zeitpunkt, desto stärker die Partei."),
-  p("Fahren sie mit der Maus über die Grafik, um die Parteistärken zum jeweiligen Zeitpunkt aufgelsitet zu sehen. Durch Klicken auf einen Parteinamen in der Legende, wird diese Partei deaktiviert und aus der Grfik entfernt. So können Sie ganz einfach einzelne Parteien miteinander vergleichen."),
+  p("Bewegen sie die Maus über die Grafik, um die Parteistärken im jeweiligen Wahljahr aufgelistet zu sehen.
+    Durch Klicken auf einen Parteinamen in der Legende, wird diese Partei deaktiviert und aus der Grafik entfernt. So können Sie ganz einfach einzelne Parteien miteinander vergleichen."),
 
   p(tags$b("Bitte beachten Sie, dass aus Gründen der Übersichtlichket nur Parteien betrachtet werden, die auch einen Sitz im Grossen Rat gewonnen haben. Daher kann es sein, dass sich die Parteistärken in einzelnen Jahen nicht auf 100 % aufsummieren.")),
   width = 12,
@@ -170,10 +173,12 @@ link_box <- box(
   id = "link_box",
   p(tags$b("Weiterführende Informationen")),
   br(),
-  p(tags$a("Statistische Mitteilung",href = "")),
+  p(tags$a("Statistische Mitteilung zu den Grossratswahlen 2024",href = "https://statistik.tg.ch/public/upload/assets/158794/2024_Nr_3_Grossratswahlen_2024.pdf?fp=1713789932840")),
   p(tags$a("Internetseite zu den Grossratswahlen 2024 auf statistik.tg.ch",href = "https://statistik.tg.ch/themen-und-daten/staat-und-politik/wahlen-und-abstimmungen/grossratswahlen.html/10545")),
   p(tags$a("Wahlergebnisse auf wahlen.tg.ch",href="https://wahlen.tg.ch/2024/7424/grossratswahlen.html/15176")),
-  p(tags$a("Thurgauer Themenatlas",href="https://themenatlas-tg.ch/#c=indicator&view=map3"))
+  p(tags$a("Thurgauer Themenatlas",href="https://themenatlas-tg.ch/#c=indicator&view=map3")),
+  p(tags$a("Open Government Data",href="https://data.tg.ch/pages/start/"))
+
 
 )
 
@@ -186,7 +191,7 @@ end_box <- box(
   p("8510 Frauenfeld"),
   p("Schweiz"),
   br(),
-  p("Bei Fragen und Anmerkungen kontaktieren Sie uns gerne per ",tags$a("Mail",href = "mailto:statistik@tg.ch?cc=felix.lorenz@tg.ch")),
+  p("Bei Fragen und Anmerkungen kontaktieren Sie uns gerne per ",tags$a("Email.",href = "mailto:statistik@tg.ch?cc=felix.lorenz@tg.ch")),
   br(),
   p("Sie finden den Code für dieses Dashbord auf GitHub."),
   actionButton(inputId='gh_button', label="GitHub Repository",

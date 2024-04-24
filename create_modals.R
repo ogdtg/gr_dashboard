@@ -65,8 +65,9 @@ saveRDS(modal_5,"shinydata/modal_5.rds")
 modal_6 <- modalDialog(
   title = tags$b("Veränderung Parteistärken als Zeitreihe"),
   p("Die Grafik zeigt die Veränderung der Parteistärken als Zeitreihe in einem sogenannten Area Chart. Je grösser die Fläche zu einem bestimmten Zeitpunkt, desto stärker die Partei."),
-  p("Fahren sie mit der Maus über die Grafik, um die Parteistärken zum jeweiligen Zeitpunkt aufgelistet zu sehen. Durch Klicken auf einen Parteinamen in der Legende, wird diese Partei deaktiviert und aus der Grafik entfernt.
-    So können Sie ganz einfach einzelne Parteien miteinander vergleichen."),
+  p("Bewegen Sie die Maus über die Grafik, um die Parteistärken im jeweiligen Wahljahr aufgelistet zu sehen.
+    Durch Klicken auf einen Parteinamen in der Legende wird diese Partei deaktiviert und aus der Grafik ausgeblendet. So können Sie ganz einfach einzelne Parteien miteinander vergleichen."),
+
   p(tags$b("Bitte beachten Sie, dass aus Gründen der Übersichtlichket nur Parteien betrachtet werden, die auch einen Sitz im Grossen Rat gewonnen haben. Daher kann es sein, dass sich die Parteistärken in einzelnen Jahen nicht auf 100 % aufsummieren.")),
   tags$img(src = "hist.PNG", width = "100%"),
   footer = list(actionButton("last_modal", label = "Zurück"),actionButton("next_modal", label = "Weiter"), modalButton("Schliessen")),
@@ -85,7 +86,7 @@ saveRDS(modal_6,"shinydata/modal_6.rds")
 
 modal_7 <- modalDialog(
   title = tags$b("Wahlbeteiligung"),
-  p("Die Wahlbeteiligung ab 2008 ist in Prozent angegeben. Der Datensatz, welcher diese Informationen enthält, findet sich ",tags$a("hier",href = "https://data.tg.ch/explore/dataset/sk-stat-11/table/?sort=wahljahr")," auf data.tg.ch"),
+  p("Die Wahlbeteiligung ab 2008 ist in Prozent angegeben. Der Datensatz, welcher diese Informationen enthält, findet sich ",tags$a("hier",href = "https://data.tg.ch/explore/dataset/sk-stat-11/table/?sort=wahljahr")," auf data.tg.ch."),
   tags$img(src = "wahlbeteiligung.PNG", width = "100%"),
   footer = list(actionButton("last_modal", label = "Zurück"),actionButton("next_modal", label = "Weiter"), modalButton("Schliessen")),
   fade = FALSE

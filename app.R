@@ -172,7 +172,7 @@ server <- function(input, output, session) {
         # Generate title winlose
         output$winlose_heading <- renderUI({
           # h3(generate_title_winlose(echart_winlose_data, selected_gemeinden))
-          h3("Wer gewann oder verlor am meisten Parteistärke?")
+          h3("Wer gewann oder verlor am meisten an Parteistärke?")
 
         })
 
@@ -226,10 +226,10 @@ server <- function(input, output, session) {
         #   render_panasch_chart(echart_sankey_data_b,partycolor=partycolor)
         #
 
-        output$pstk_hist_chart_b <-
+        output$pstk_hist_chart_a <-
           render_pstk_hist_chart(pstk_hist_data, selected_gemeinden[1])
 
-        output$pstk_hist_chart_a <-
+        output$pstk_hist_chart_b <-
           render_pstk_hist_chart(pstk_hist_data, selected_gemeinden[2])
 
 
